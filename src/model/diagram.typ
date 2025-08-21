@@ -605,10 +605,9 @@
     bounds.top *= -1
 
     box(
-      inset: bounds, 
       diagram, 
       stroke: if debug { 0.1pt } else { none },
-      baseline: bounds.bottom
+      .. if (it.dimensionless-labels) { () } else { (inset: bounds, baseline:  bounds.bottom) },
     )
   })
 }
@@ -672,6 +671,7 @@
     e.field("margin", e.types.union(ratio, dictionary), default: 6%),
     e.field("cycle", e.types.wrap(e.types.array(e.types.union(function, color, dictionary)), fold: none), default: petroff10),
     e.field("fill", e.types.option(e.types.paint), default: none),
+    e.field("dimensionless-labels", bool, default: false),
   ),
 
   parse-args: (default-parser, fields: none, typecheck: none) => (args, include-required: false) => {
